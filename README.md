@@ -1,2 +1,1 @@
-# kubernetes
-Kubernetes playground
+# kubernetes using vagrant & packer (installation on bare metal) 
