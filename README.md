@@ -12,7 +12,7 @@ $ vagrant up --provider libvirt
 Password for root user is _kubeadmin_
 ```
 $ mkdir ~/.kube
-$ scp root@172.16.16.100:/etc/kubernetes/admin.conf ~/.kube/config
+$ scp root@192.168.1.100:/etc/kubernetes/admin.conf ~/.kube/config
 ```
 ### Destroy the cluster
 ```

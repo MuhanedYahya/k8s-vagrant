@@ -11,7 +11,6 @@ MEMORY_MASTER_NODE  = 2048
 MEMORY_WORKER_NODE  = 1024
 WORKER_NODES_COUNT  = 2
 
-
 Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", path: "bootstrap.sh"
@@ -22,9 +21,9 @@ Vagrant.configure(2) do |config|
     node.vm.box               = VAGRANT_BOX
     node.vm.box_check_update  = false
     node.vm.box_version       = VAGRANT_BOX_VERSION
-    node.vm.hostname          = "kmaster.example.com"
+    node.vm.hostname          = "kmaster"
 
-    node.vm.network "private_network", ip: "172.16.16.100"
+    node.vm.network "public_network", ip: "192.168.1.100" # Change to your network IP
 
     node.vm.provider :virtualbox do |v|
       v.name    = "kmaster"
@@ -42,7 +41,6 @@ Vagrant.configure(2) do |config|
 
   end
 
-
   # Kubernetes Worker Nodes
   (1..WORKER_NODES_COUNT).each do |i|
 
@@ -51,9 +49,9 @@ Vagrant.configure(2) do |config|
       node.vm.box               = VAGRANT_BOX
       node.vm.box_check_update  = false
       node.vm.box_version       = VAGRANT_BOX_VERSION
-      node.vm.hostname          = "kworker#{i}.example.com"
+      node.vm.hostname          = "kworker#{i}"
 
-      node.vm.network "private_network", ip: "172.16.16.10#{i}"
+      node.vm.network "public_network", ip: "192.168.1.10#{i}" # Change to your network IP
 
       node.vm.provider :virtualbox do |v|
         v.name    = "kworker#{i}"
