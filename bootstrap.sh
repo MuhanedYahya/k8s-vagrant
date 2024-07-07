@@ -46,8 +46,9 @@ systemctl restart containerd
 systemctl enable containerd >/dev/null
 
 echo "[TASK 6] Set up kubernetes repo"
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
+VERSION=1.30
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v$VERSION/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v$VERSION/deb/ /" > /etc/apt/sources.list.d/kubernetes.list
 
 echo "[TASK 7] Install Kubernetes components (kubeadm, kubelet and kubectl)"
 apt-get update -qq >/dev/null
@@ -62,7 +63,7 @@ echo "[TASK 9] Set root password"
 echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
 echo "export TERM=xterm" >> /etc/bash.bashrc
 echo "[TASK 10] Install nfs-common"
-sudo -E apt-get install -y -qq nfs-common >/dev/null
+apt-get install -y -qq nfs-common >/dev/null
 
 echo "[TASK 11] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
