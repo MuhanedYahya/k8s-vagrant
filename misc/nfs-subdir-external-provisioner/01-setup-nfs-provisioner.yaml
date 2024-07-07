@@ -103,7 +103,7 @@ spec:
       volumes:
         - name: nfs-client-root
           nfs:
-            server: kmaster # use your nfs server
+            server: 192.168.1.230 # use your nfs server
             path: /srv/nfs/kubedata # use your nfs exports path
 ---
 apiVersion: storage.k8s.io/v1

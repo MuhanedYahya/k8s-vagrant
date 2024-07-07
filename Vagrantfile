@@ -10,6 +10,7 @@ CPUS_WORKER_NODE    = 1
 MEMORY_MASTER_NODE  = 2048
 MEMORY_WORKER_NODE  = 1024
 WORKER_NODES_COUNT  = 2
+NETWORK_INTERFACE = "wlp4s0"
 
 Vagrant.configure(2) do |config|
 
@@ -17,13 +18,13 @@ Vagrant.configure(2) do |config|
 
   # Kubernetes Master Server
   config.vm.define "kmaster" do |node|
-
+  
     node.vm.box               = VAGRANT_BOX
     node.vm.box_check_update  = false
     node.vm.box_version       = VAGRANT_BOX_VERSION
     node.vm.hostname          = "kmaster"
 
-    node.vm.network "public_network", ip: "192.168.1.100" # Change to your network IP
+    node.vm.network "public_network",bridge: NETWORK_INTERFACE, ip: "192.168.1.100" # Change to your network IP
 
     node.vm.provider :virtualbox do |v|
       v.name    = "kmaster"
@@ -51,8 +52,8 @@ Vagrant.configure(2) do |config|
       node.vm.box_version       = VAGRANT_BOX_VERSION
       node.vm.hostname          = "kworker#{i}"
 
-      node.vm.network "public_network", ip: "192.168.1.10#{i}" # Change to your network IP
-
+      node.vm.network "public_network",bridge: NETWORK_INTERFACE, ip: "192.168.1.10#{i}" # Change to your network IP
+      
       node.vm.provider :virtualbox do |v|
         v.name    = "kworker#{i}"
         v.memory  = MEMORY_WORKER_NODE
