@@ -19,6 +19,23 @@ $ scp root@192.168.1.100:/etc/kubernetes/admin.conf ~/.kube/config
 $ vagrant destroy -f
 ```
 
+
+### install cilium & modify clusterPoolIPv4PodCIDRList to match your pod cidr
+
+```
+helm install cilium cilium/cilium --version 1.15.6 \
+  --namespace kube-system --set ipam.operator.clusterPoolIPv4PodCIDRList="10.244.0.0/16"
+```
+
+### install argocd 
+```
+kubectl create ns argocd
+```
+```
+helm install argocd argo/argo-cd --namespace argocd
+```
+
+
 ## Deploying Add Ons
 ### Deploy dynamic nfs volume provisioning
 ```
