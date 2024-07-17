@@ -15,7 +15,7 @@ sudo apt install nfs-kernel-server ufw -y
 echo "[TASK 3] creating nfs exports"
 sudo mkdir -p $NFS_SHARE
 sudo chown nobody:nogroup $NFS_SHARE
-sudo echo "$NFS_SHARE $ALLOWED_RANGE(rw,sync,no_subtree_check)" >> /etc/exports
+sudo echo "$NFS_SHARE $ALLOWED_RANGE(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
 sudo exportfs -a
 sudo systemctl restart nfs-kernel-server
 sudo ufw allow ssh
