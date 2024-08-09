@@ -67,7 +67,7 @@ apt-get install -y -qq nfs-common >/dev/null
 
 echo "[TASK 11] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
-192.168.1.170   kmaster
-192.168.1.171   kworker1
-192.168.1.172   kworker2
+192.168.1.180   kmaster
+192.168.1.181   kworker1
+192.168.1.182   kworker2
 EOF

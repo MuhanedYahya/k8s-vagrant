@@ -5,7 +5,7 @@ kubeadm config images pull >/dev/null
 
 echo "[TASK 2] Initialize Kubernetes Cluster"
 # 10.0.0.0/8 is the default pod cidir of cilium
-kubeadm init --apiserver-advertise-address=192.168.1.170 --pod-network-cidr=10.244.0.0/16 >> /root/kubeinit.log 2>/dev/null
+kubeadm init --apiserver-advertise-address=192.168.1.180 --pod-network-cidr=10.2.0.0/16 >> /root/kubeinit.log 2>/dev/null
 
 # echo "[TASK 3] Deploy Calico network"
 # kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/tigera-operator.yaml >/dev/null
