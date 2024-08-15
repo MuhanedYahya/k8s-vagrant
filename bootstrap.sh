@@ -10,9 +10,6 @@ echo "[TASK 1] Disable and turn off SWAP"
 sed -i '/swap/d' /etc/fstab
 swapoff -a
 
-echo "[TASK 2] Stop and Disable firewall"
-systemctl disable --now ufw >/dev/null 2>&1
-
 echo "[TASK 3] Enable and Load Kernel modules"
 cat >>/etc/modules-load.d/containerd.conf<<EOF
 overlay
@@ -31,13 +28,16 @@ sysctl --system >/dev/null 2>&1
 
 echo "[TASK 5] Install containerd runtime"
 export DEBIAN_FRONTEND=noninteractive
-apt-get update -qq >/dev/null
-apt-get install -qq -y apt-transport-https ca-certificates curl gnupg lsb-release >/dev/null
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt-get update -qq >/dev/null
 apt-get install -qq -y containerd.io >/dev/null
 containerd config default > /etc/containerd/config.toml
@@ -61,13 +61,8 @@ systemctl reload sshd
 
 echo "[TASK 9] Set root password"
 echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
-echo "export TERM=xterm" >> /etc/bash.bashrc
-echo "[TASK 10] Install nfs-common"
-apt-get install -y -qq nfs-common >/dev/null
 
 echo "[TASK 11] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
-192.168.1.170   kmaster
-192.168.1.171   kworker1
-192.168.1.172   kworker2
+192.168.1.170   master
 EOF
