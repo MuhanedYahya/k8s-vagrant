@@ -14,9 +14,9 @@ WORKER_BASE_IP = 170
 
 # Worker Pool Configurations
 WORKER_POOLS = [
-  { name_prefix: "worker", count: 0, cpus: 1, memory: 1048 },  # Pool 1
-  { name_prefix: "blue", count: 1, cpus: 2, memory: 2096 },  # Pool 2
-  { name_prefix: "canvas", count: 1, cpus: 1, memory: 1192 }   # Pool 3
+  { name_prefix: "worker", count: 1, cpus: 1, memory: 1048 },  # Pool 1
+  { name_prefix: "small-pool", count: 0, cpus: 2, memory: 2096 },  # Pool 2
+  { name_prefix: "large-pool", count: 0, cpus: 1, memory: 1192 }   # Pool 3
 ]
 
 Vagrant.configure(2) do |config|
@@ -75,8 +75,8 @@ Vagrant.configure(2) do |config|
         node.vm.box_version       = VAGRANT_BOX_VERSION
         node.vm.hostname          = node_name
 
-        ip = "192.168.1.#{ip_counter}"
         ip_counter += 1
+        ip = "192.168.1.#{ip_counter}"
 
         add_network_interface(node, ETH_NETWORK_INTERFACE, ip)
         add_network_interface(node, WIFI_NETWORK_INTERFACE, ip)
