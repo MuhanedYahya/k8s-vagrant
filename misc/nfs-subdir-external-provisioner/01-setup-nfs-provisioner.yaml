@@ -97,13 +97,13 @@ spec:
             - name: PROVISIONER_NAME
               value: k8s-sigs.io/nfs-subdir-external-provisioner
             - name: NFS_SERVER
-              value: 192.168.1.230 # use your nfs server
+              value: 192.168.1.175 # use your nfs server
             - name: NFS_PATH
               value: /srv/nfs/kubedata # use your nfs exports path
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 192.168.1.230 # use your nfs server
+            server: 192.168.1.175 # use your nfs server
             path: /srv/nfs/kubedata # use your nfs exports path
 ---
 apiVersion: storage.k8s.io/v1

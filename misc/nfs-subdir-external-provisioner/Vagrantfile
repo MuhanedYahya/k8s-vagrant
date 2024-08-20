@@ -9,7 +9,7 @@ CPUS_COUNT    = 1
 MEMORY  = 1024
 WIFI_NETWORK_INTERFACE = "enp3s0"
 ETH_NETWORK_INTERFACE = ""
-NFS_IP = "192.168.1.230"
+NFS_IP = "192.168.1.175"
 
 Vagrant.configure(2) do |config|
 
